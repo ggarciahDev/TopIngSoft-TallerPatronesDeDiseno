@@ -10,10 +10,14 @@ import java.util.List;
 public class ClienteDaoImpl implements ClienteDao {
 
     //list is working as a database
-    public ArrayList<Cliente> clientes;
+    private ArrayList<Cliente> clientes;
 
     public ClienteDaoImpl() {
         clientes = new ArrayList<>();
+    }
+
+    public ArrayList<Cliente> getClientes(){
+        return this.clientes;
     }
 
     @Override

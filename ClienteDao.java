@@ -2,6 +2,7 @@
 
 import com.journaldev.model.Books;*/
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ClienteDao {
@@ -13,4 +14,6 @@ public interface ClienteDao {
     public void delCliente(int idCliente);
 
     public void updateCliente(int idCliente, Cliente cliente);
+
+    public ArrayList<Cliente> getClientes();
 }

@@ -5,10 +5,15 @@ import java.util.List;
 public class FacturaDaoImpl implements FacturaDao {
 
     //list is working as a database
-    public ArrayList<Factura> facturas;
+    private ArrayList<Factura> facturas;
 
     public FacturaDaoImpl() {
         facturas = new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<Factura> getFacturas(){
+        return this.facturas;
     }
 
     @Override
@@ -19,7 +24,7 @@ public class FacturaDaoImpl implements FacturaDao {
     @Override
     public void printFacturas(){
         for(Factura factura: facturas){
-            System.out.println(factura.printInfo());
+            System.out.println("\n<Factura> "+factura.printInfo()+"\n");
         }
     }
 

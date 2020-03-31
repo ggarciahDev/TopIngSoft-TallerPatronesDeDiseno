@@ -5,10 +5,15 @@ import java.util.List;
 public class ItemDaoImpl implements ItemDao {
 
     //list is working as a database
-    public ArrayList<Item> items;
+    private ArrayList<Item> items;
 
     public ItemDaoImpl() {
         items = new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<Item> getItems(){
+        return this.items;
     }
 
     @Override

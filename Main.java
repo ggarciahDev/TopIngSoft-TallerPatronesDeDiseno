@@ -119,36 +119,44 @@ class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Bienvenido a la tienda, eres el administrador? y/n");
+        System.out.println("\nBienvenido a la tienda, eres el administrador? (y/n) \n");
         String res = br.readLine();
         while(true){
             if(res.equals("y")){
                 break;
             }
-            System.out.println("Si, usted si es, no me mienta. Escriba y");
+            System.out.println("\nSi, usted si es, no me mienta. Escriba: y\n");
             res = br.readLine();
         }
 
         
-        System.out.println("Hola Administrador, qué deseas hacer?");
+        System.out.println("\nHola Administrador, que deseas hacer? (c/r/u/d/exit)\n");
 
         while(true){
 
-            System.out.println("Crear una factura nueva. (c)");
-            System.out.println("Ver historial de facturas. (r)");
-            System.out.println("Actualizar una factura. (u)");
-            System.out.println("Borrar una factura. (d)");
-            System.out.println("Desea salir. (exit)");
+            System.out.println("-> Crear una factura nueva. (c)");
+            System.out.println("-> Ver historial de facturas. (r)");
+            System.out.println("-> Actualizar una factura. (u)");
+            System.out.println("-> Borrar una factura. (d)");
+            System.out.println("-> Desea salir. (exit)\n");
 
             String resA = br.readLine();
 
             if(resA.equals("c")){
 
-                System.out.println("Ha seleccionado crear factura nueva");
+                System.out.print("\nHa seleccionado crear factura nueva. ");
                 Factura newFactura;
-                System.out.println("Qué tipo de factura desea crear, factura Vencida o Pagada? (v/p)");
+                System.out.println("Que tipo de factura desea crear, factura Vencida o Pagada? (v/p)\n");
 
                 String tipoFactura = br.readLine();
+
+                while(true){
+                    if( tipoFactura.equals("v") || tipoFactura.equals("p") ){
+                        break;
+                    }
+                    System.out.println("\n Has ingresado una respuesta incorrecta, intentalo nuevamente. \n");
+                    tipoFactura = br.readLine();
+                }
 
                 if(tipoFactura.equals("v")){
 
@@ -156,7 +164,6 @@ class Main {
 
                 }else{
 
-                    System.out.println("Por defecto, factura Pagada.");
                     newFactura = factoryFacturas.getFactura("facturaPagada");
 
                 }
@@ -164,16 +171,16 @@ class Main {
                 Random  rnd = new Random();
                 int nroFactura = (int) (rnd.nextDouble() * 100 + 20);
 
-                System.out.println("ingrese la fecha de la factura:");
+                System.out.println("\ningrese la fecha de la factura (dia/mes/anio):\n");
                 String fecha = br.readLine();
 
-                System.out.println("ingrese el total:");
+                System.out.println("\ningrese el total (dolares):\n");
                 Double total = Double.parseDouble( br.readLine() );
 
-                System.out.println("ingrese el estado:");
+                System.out.println("\ningrese el estado ():\n");
                 String estado = br.readLine();
                 
-                System.out.println("Ahora, su cliente. él es de tipo Mayor o Menor? (m/n)");
+                System.out.println("\nAhora, su cliente. el es de tipo Mayor o Menor? (m/n)\n");
                 Cliente cliente;
 
                 String tipoCliente = br.readLine();
@@ -188,19 +195,19 @@ class Main {
                 ArrayList <Item> itemsComprados = new ArrayList<>();
 
                 while(true){
-                    System.out.println("A continuación, se mostrarán los items en venta:");
+                    System.out.println("A continuación, se mostrarán los items en venta:\n");
                     itemDao.printItem();
 
-                    System.out.println("\n Escriba el id del item que desea incluir en la factura");
+                    System.out.println("\nEscriba el id del item que desea incluir en la factura\n");
                     int idItem = Integer.parseInt( br.readLine() );
                 
-                    for(Item item: itemDao.items){
+                    for(Item item: itemDao.getItems()){
                         if( idItem == item.getId() ){
                             itemsComprados.add(item);
                         }
                     }
 
-                    System.out.println("Desea agregar otro item? (y/n)");
+                    System.out.println("\nDesea agregar otro item? (y/n)\n");
                     String respNewItem = br.readLine();
 
                     if(respNewItem.equals("y")){
@@ -220,66 +227,63 @@ class Main {
 
                 facturaDao.addFactura(newFactura);
 
-                System.out.println("Factura agregada exitosamente.");
+                System.out.println("\nFactura agregada exitosamente.\n");
 
             }else if(resA.equals("r")){
 
-                System.out.println("Imprimiendo facturas...");
+                System.out.println("\nImprimiendo facturas...");
                 System.out.println();
 
-                //imprimir todas las facturas del daoFacturas
                 facturaDao.printFacturas();
-                System.out.println();
 
             }else if(resA.equals("u")){
                 facturaDao.printFacturas();
-                System.out.println();
-                System.out.println("Perfecto empecemos, ingresa el Nro de la factura a editar:");
+                System.out.println("Perfecto empecemos, ingresa el Nro de la factura a editar:\n");
 
                 int nroFactura = Integer.parseInt( br.readLine() );
 
                 Factura newFactura = factoryFacturas.getFactura("facturaVencida");
                 
-                for(Factura factura: facturaDao.facturas){
+                for(Factura factura: facturaDao.getFacturas()){
                     if( factura.getNroFactura() == nroFactura ){
                         newFactura = factura; 
                     }
                 }
 
-                System.out.println("Qué aspecto de la factura deseas cambiar?");
-                System.out.println("fecha de la factura? (f)");
-                System.out.println("total factura? (t)");
-                System.out.println("estado de la factura? (e)");
+                System.out.println("Que aspecto de la factura deseas cambiar?");
+                System.out.println("-> Fecha de la factura? (f)");
+                System.out.println("-> Total factura? (t)");
+                System.out.println("-> Estado de la factura? (e)");
 
                 String aspecto = br.readLine();
 
                 if( aspecto.equals("f") ){
                     
-                    System.out.println("ingrese la nueva fecha:");
+                    System.out.println("\ningrese la nueva fecha:\n");
                     
                     String newFecha = br.readLine();
                     newFactura.setFechaFactura(newFecha);
 
-                    System.out.println("Fecha modificada exitosamente.\n");
+                    System.out.println("\nFecha modificada exitosamente.\n");
 
                 }else if( aspecto.equals("t") ){
 
-                    System.out.println("ingrese el nuevo total:");
+                    System.out.println("\ningrese el nuevo total:\n");
                     
                     Double newTotal = Double.parseDouble( br.readLine() );
                     newFactura.setTotalFactura(newTotal);
 
-                    System.out.println("Total modificado exitosamente.\n");
+                    System.out.println("\nTotal modificado exitosamente.\n");
 
                 }else if( aspecto.equals("e") ){
-                    System.out.println("ingrese el nuevo estado:");
+                    System.out.println("\ningrese el nuevo estado:\n");
                     
                     String newEstado = br.readLine();
                     newFactura.setEstado(newEstado);
 
-                    System.out.println("Estado modificado exitosamente.\n");
+                    System.out.println("\nEstado modificado exitosamente.\n");
                 }else{
-                    System.out.println("No se realizará ningún cambio.");
+                    System.out.println("\nNo se realizará ningún cambio.\n");
                 }
 
                 facturaDao.updateFactura(nroFactura, newFactura);
@@ -289,15 +293,15 @@ class Main {
                 facturaDao.printFacturas();
                 System.out.println();
 
-                System.out.println("Por favor ingresa el nro de factura que deseas eliminar.");
+                System.out.println("Por favor ingresa el nro de factura que deseas eliminar.\n");
 
                 int nroFactura = Integer.parseInt( br.readLine() );
                 facturaDao.delFactura(nroFactura);
 
-                System.out.println("Factura eliminada exitosamente.\n");
+                System.out.println("\nFactura eliminada exitosamente.\n");
 
             }else if(resA.equals("exit")){
-                System.out.println("Cerrando sistema...");
+                System.out.println("\nCerrando sistema...\n");
                 break;
             }
         

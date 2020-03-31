@@ -2,10 +2,15 @@ import java.util.ArrayList;
 class TipoItemDaoImpl implements TipoItemDao{
 
 
-    public ArrayList <TipoItem> tipoItems;
+    private ArrayList <TipoItem> tipoItems;
 
     public TipoItemDaoImpl(){
         tipoItems = new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<TipoItem> getTipoItems(){
+        return this.tipoItems;
     }
 
     @Override
